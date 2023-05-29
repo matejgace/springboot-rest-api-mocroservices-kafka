@@ -1,6 +1,7 @@
 package mg.java.springbootrestapi.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import mg.java.springbootrestapi.dto.UserDto;
 import mg.java.springbootrestapi.service.UserService;
@@ -19,7 +20,7 @@ public class UserController {
 
     // build create User REST API
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+    public ResponseEntity<UserDto> createUser( @RequestBody @Valid UserDto user){
         UserDto savedUser = userService.createUser(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
@@ -44,7 +45,7 @@ public class UserController {
     @PutMapping("{id}")
     // http://localhost:8080/api/users/1
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId,
-                                              @RequestBody UserDto user){
+                                              @RequestBody @Valid UserDto user){
         user.setId(userId);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
